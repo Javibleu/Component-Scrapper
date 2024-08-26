@@ -4,7 +4,7 @@
   "description": "Tool to extract clean html & css to build isolated components",
   "main": "app.js",
   "scripts": {
-    "dev": "tsnd --respawn --clear src/app.ts"
+    "dev": "tsnd --respawn --clear --watch input --rs src/app.ts"
   },
   "author": "'javibleu'",
   "license": "MIT",
