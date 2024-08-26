@@ -1,0 +1,21 @@
+{
+  "name": "componentbuilder",
+  "version": "1.0.0",
+  "description": "Tool to extract clean html & css to build isolated components",
+  "main": "app.js",
+  "scripts": {
+    "dev": "tsnd --respawn --clear src/app.ts"
+  },
+  "author": "'javibleu'",
+  "license": "MIT",
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^6.0.0",
+    "@types/node": "^22.5.0",
+    "glob": "^11.0.0",
+    "postcss": "^8.4.41",
+    "postcss-discard-comments": "^7.0.2",
+    "rimraf": "^6.0.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.4"
+  }
+}
