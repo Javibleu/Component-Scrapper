@@ -26,7 +26,8 @@ async function runPurgeCSS(): Promise<void> {
     clearDirectory(config.output);
     const cssFiles = globSync(config.css)
     const htmlFiles = globSync(config.content);
-    console.log(htmlFiles);
+    const otherFiles = globSync('input/**/*', { nodir: true }).filter(file => !cssFiles.includes(file) && !htmlFiles.includes(file));
+
 
     const purgeCSSResults = await Promise.all(
       cssFiles.map(async (cssFile) => {
@@ -35,6 +36,8 @@ async function runPurgeCSS(): Promise<void> {
           PurgeCSS({
             content: htmlFiles,
             extractors: config.extractors,
+            keyframes: true,
+            fontFace: true
           }),
           discardComments({ removeAll: true }), // Remove all comments
         ]).process(cssContent, { from: cssFile, to: path.join(config.output, path.relative('input', cssFile)) });
@@ -53,7 +56,16 @@ async function runPurgeCSS(): Promise<void> {
       fs.copyFileSync(htmlFile, destPath);
     });
 
-    console.log('CSS tree shaking completed and HTML files copied.');
+    otherFiles.forEach((file) => {
+      const destPath = path.join(config.output, path.relative('input', file));
+      fs.mkdirSync(path.dirname(destPath), { recursive: true });
+      fs.copyFileSync(file, destPath);
+    });
+
+    console.log(`CSS tree shaking completed and HTML files copied.`);
+    console.log(`${cssFiles.length} CSS files processed.`);
+    console.log(`${htmlFiles.length} HTML files copied.`);
+    console.log(`${otherFiles.length} other files copied.`);
   } catch (error) {
     console.error('Error during PurgeCSS processing:', error);
   }

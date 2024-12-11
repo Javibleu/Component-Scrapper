@@ -1,7 +1,7 @@
 import { customExtractor } from './customExtractor';
 
 export default {
-    content: ['input/**/*.html', '!input/ignore/**'],
+    content: ['input/*.html', '!input/ignore/**'],
     css: ['input/**/*.css'],
     output: 'dist/',
     extractors: [
